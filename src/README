@@ -1,8 +1,0 @@
-Usage:
-	python compile.py [-O] src_file.py
-
-Output: 
-	compiled_file.s
-
-Flags:
-	-O: Turns on tail call optimization
