@@ -17,6 +17,6 @@ Enable tail call optimization:
 -h for help.
 
 #Credits#
-Josh Wepman wrote at least half of the original code.
-Christopher Clark wrote the C hashtable library.
+Josh Wepman wrote at least half of the original code. 
+Christopher Clark wrote the C hashtable library. 
 The runtime libraries were supplied to us as part of the course.
