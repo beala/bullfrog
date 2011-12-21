@@ -6,7 +6,7 @@ import declassify
 import p3uniquify
 import p3explicate
 import p3heapify
-
+import p3closure
 class Compiler(object):
 
     compiled = None
@@ -22,7 +22,8 @@ class Compiler(object):
                   declassify.Declassify(),
                   p3uniquify.P3Uniquify(),
                   p3explicate.P3Explicate(),
-                  p3heapify.P3Heapify()]
+                  p3heapify.P3Heapify(),
+                  p3closure.P3Closure()]
 
         stage_input = self.inFilename
         for stage in stages:

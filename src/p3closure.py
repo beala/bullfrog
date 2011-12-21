@@ -1,7 +1,8 @@
 from p2closure import *
 from p3ast import *
+import stage
 
-class P3Closure(P2Closure):
+class P3Closure(P2Closure, stage.Stage):
     def visit_If(self, node):
         (body_tests_test, funs_tests_test) = self.visit(node.tests[0][0])
         (body_tests_then, funs_tests_then) = self.visit(node.tests[0][1])
