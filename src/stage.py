@@ -4,13 +4,14 @@ class Stage(object):
     _reservedFuns = ['input', 'type_error', 'create_class', 'create_object',
                      'is_class', 'get_function', 'get_receiver',
                      'is_bound_method', 'is_unbound_method']
+    _stageInput = None
 
     # Public Methods:
-    def setInput(self):
+    def setInput(self, stage_input):
         """Sets the input to the stage and prepares the class for the executing
            the do() method.
         """
-        raise AbstractMethod('Attempting to call abstract setInput()')
+        self._stageInput = stage_input
 
     def do(self):
         """This method needs to be overridden by each stage that's derived from it.

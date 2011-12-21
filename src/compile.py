@@ -3,7 +3,7 @@ import argparse
 
 import parse
 import declassify
-
+import p3explicate
 class Compiler(object):
 
     compiled = None
@@ -16,7 +16,8 @@ class Compiler(object):
 
     def compile(self):
         stages = [parse.Parse(),
-                  declassify.Declassify()]
+                  declassify.Declassify(),
+                  p3explicate.P3Explicate()]
         stage_input = self.inFilename
         for stage in stages:
             stage.setInput(stage_input)

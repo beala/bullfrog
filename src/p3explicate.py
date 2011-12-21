@@ -1,6 +1,12 @@
 from p2explicate import *
 from p3ast import *
-class P3Explicate(P2Explicate):
+import stage
+
+class P3Explicate(P2Explicate, stage.Stage):
+
+    # Public Interface:
+    def do(self):
+        return self.visit(self._stageInput)
 
     def _iterateOverAndVisit(self, toIterate):
         result = []
