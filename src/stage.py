@@ -14,11 +14,13 @@ class Stage(object):
         self._stageInput = stage_input
 
     def do(self):
-        """This method needs to be overridden by each stage that's derived from it.
-           It should carry out all the processes necessary to complete that stage of
-           the compile.
+        """Processes the stageInput. If the derived class is the parser, it
+           should parse the input. If it's a flattener, it should flatten the
+           input. The result is then returned.
         """
-        raise AbstractMethod('Attempting to call abstract do()')
+        # visit() is a method in the ASTVisitor class. Perhaps these classes
+        # should be merged?
+        return self.visit(self._stageInput)
 
     # Private Methods:
     def _genName(self, prefix):

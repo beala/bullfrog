@@ -5,6 +5,8 @@ import parse
 import declassify
 import p3uniquify
 import p3explicate
+import p3heapify
+
 class Compiler(object):
 
     compiled = None
@@ -19,7 +21,9 @@ class Compiler(object):
         stages = [parse.Parse(),
                   declassify.Declassify(),
                   p3uniquify.P3Uniquify(),
-                  p3explicate.P3Explicate()]
+                  p3explicate.P3Explicate(),
+                  p3heapify.P3Heapify()]
+
         stage_input = self.inFilename
         for stage in stages:
             stage.setInput(stage_input)
