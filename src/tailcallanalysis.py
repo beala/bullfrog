@@ -1,6 +1,7 @@
 from astvisitor import *
 from prjast import *
 from compiler.ast import *
+import stage
 
 ## Dictionary notation
 #   Flow Sensitive Global Dictionary
@@ -13,10 +14,15 @@ from compiler.ast import *
 #   varTup
 #       (varName, [assNode, assNode,...])
 
-class TailCallAnalysis(ASTVisitor):
+class TailCallAnalysis(ASTVisitor, stage.Stage):
 
     _nodesToOptimize = []
     def getNodesToOptimize(self): return self._nodesToOptimize
+
+    def do(self):
+        for func in self._stageInput:
+            self.visit(func)
+        return self._stageInput
 
     # Private Methods: #########################################################################################
     def _makeNodeDict(self):

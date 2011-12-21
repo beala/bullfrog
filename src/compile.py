@@ -8,6 +8,7 @@ import p3explicate
 import p3heapify
 import p3closure
 import p3flattener
+import tailcallanalysis
 
 class Compiler(object):
 
@@ -26,7 +27,8 @@ class Compiler(object):
                   p3explicate.P3Explicate(),
                   p3heapify.P3Heapify(),
                   p3closure.P3Closure(),
-                  p3flattener.P3ASTFlattener()]
+                  p3flattener.P3ASTFlattener(),
+                  tailcallanalysis.TailCallAnalysis()]
 
         stage_input = self.inFilename
         for stage in stages:
