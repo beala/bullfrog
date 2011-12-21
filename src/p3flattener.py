@@ -1,6 +1,8 @@
 from p2flattener import *
 from p3ast import *
-class P3ASTFlattener(P2ASTFlattener):
+import stage
+
+class P3ASTFlattener(P2ASTFlattener, stage.Stage):
     def visit_If(self, node):
         (test_result, test_flat) = self.visit(node.tests[0][0])
         then_flat = self.visit(node.tests[0][1]) #is a Stmt node

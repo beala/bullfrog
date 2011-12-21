@@ -7,6 +7,8 @@ import p3uniquify
 import p3explicate
 import p3heapify
 import p3closure
+import p3flattener
+
 class Compiler(object):
 
     compiled = None
@@ -23,7 +25,8 @@ class Compiler(object):
                   p3uniquify.P3Uniquify(),
                   p3explicate.P3Explicate(),
                   p3heapify.P3Heapify(),
-                  p3closure.P3Closure()]
+                  p3closure.P3Closure(),
+                  p3flattener.P3ASTFlattener()]
 
         stage_input = self.inFilename
         for stage in stages:
