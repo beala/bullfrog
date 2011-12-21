@@ -1,7 +1,13 @@
 from p2uniquify import *
 from p3ast import *
-class P3Uniquify(P2Uniquify):
+import stage
+
+class P3Uniquify(P2Uniquify, stage.Stage):
     # Private Functions: ###############################################################
+
+    # Public Interface:
+    def do(self):
+        return self.visit(self._stageInput)
 
     # Desc: Take a variable name that hasn't be renamed yet, and return
     #           what it should be renamed to.
