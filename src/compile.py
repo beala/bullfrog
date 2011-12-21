@@ -9,6 +9,9 @@ import p3heapify
 import p3closure
 import p3flattener
 import tailcallanalysis
+import Myx86Selector
+import InterferenceGraph
+import p3removestructuredcontrolflow
 
 class Compiler(object):
 
@@ -35,7 +38,20 @@ class Compiler(object):
             stage.setInput(stage_input)
             stage_output = stage.do()
             stage_input = stage_output
-        self.compiled = stage_output
+#        self.compiled = stage_output
+
+        asmString = ""
+        data_section = ""
+        for func in stage_output:
+            selector = Myx86Selector.Myx86Selector()
+            tmpIR = selector.generate_x86_code(func)
+            data_section += selector.dataSection
+            ig = InterferenceGraph.InterferenceGraph(tmpIR)
+            coloredIR=ig.allocateRegisters()
+            no_ifs = p3removestructuredcontrolflow.P3RemoveStructuredControlFlow().removeIfs(coloredIR)
+            ig.setIR(no_ifs)
+            asmString += ig.emitColoredIR()
+        self.compiled =  "\n"+ data_section +"\n.text"+asmString
 
     def write(self):
         out_file = open(self.outFilename, "w")
