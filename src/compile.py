@@ -13,6 +13,8 @@ import Myx86Selector
 import InterferenceGraph
 import p3removestructuredcontrolflow
 
+import prettyprint
+
 class Compiler(object):
 
     compiled = None
@@ -38,6 +40,9 @@ class Compiler(object):
             stage.setInput(stage_input)
             stage_output = stage.do()
             stage_input = stage_output
+            if self._debug == True:
+                print "\n" + stage.__class__.__name__ + "-" * 50
+                print prettyprint.PrettyPrint().prettyPrint(stage_output)
 #        self.compiled = stage_output
 
         asmString = ""
@@ -59,7 +64,14 @@ class Compiler(object):
         out_file.close()
 
     def setFlags(self, flags):
-        pass
+        if 'debug' in flags:
+            self._debug = flags['debug']
+        else:
+            self._debug = False
+        if 'opt' in flags:
+            self._opt = flags['opt']
+        else:
+            self._opt = False
 
     def setOutFile(self, filename):
         self.outFilename = filename
@@ -78,8 +90,13 @@ if __name__ == "__main__":
                 '-O',
                 action='store_true',
                 help='Enable optimizations.')
+    arg_parser.add_argument(
+                '-d',
+                action='store_true',
+                help='Enable debugging output.')
     options = arg_parser.parse_args()
 
     compiler = Compiler(options.input_file, options.output_file)
+    compiler.setFlags({'debug':options.d, 'opt':options.O})
     compiler.compile()
     compiler.write()
