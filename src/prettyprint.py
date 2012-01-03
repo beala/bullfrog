@@ -8,10 +8,16 @@ class PrettyPrint(astvisitor.ASTVisitor):
     # Configure how many spaces per indent
     _INDENT_NUM = 2
     # How many characters in a line before it's broken down.
-    _LINE_LENGTH = 50
+    _LINE_LENGTH = 100
 
     def prettyPrint(self, ast):
-        return self.visit(ast, 0, "")
+        prettyStr = ""
+        if isinstance(ast, list):
+            for func in ast:
+                prettyStr += self.visit(func, 0, "")
+        else:
+            prettyStr = self.visit(ast, 0, "")
+        return prettyStr
 
     def _appendIndents(self, str, indent):
         return str + " " * indent * self._INDENT_NUM

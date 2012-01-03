@@ -17,6 +17,8 @@ class GetTag(Node):
         self.arg = arg
     def __repr__(self):
         return 'GetTag(' + str(self.arg) + ')'
+    def getChildNodes(self):
+        return (self.arg,)
 
 class InjectFrom(Node):
     def __init__(self, typ, arg):
@@ -24,6 +26,8 @@ class InjectFrom(Node):
         self.arg = arg
     def __repr__(self):
         return 'InjectFrom(' + str(self.typ) + ', ' + str(self.arg) + ')'
+    def getChildNodes(self):
+        return (self.typ, self.arg)
 
 class ProjectTo(Node):
     def __init__(self, typ, arg):
@@ -31,6 +35,8 @@ class ProjectTo(Node):
         self.arg = arg
     def __repr__(self):
         return 'ProjectTo(' + str(self.typ) + ', ' + str(self.arg) + ')'
+    def getChildNodes(self):
+        return self.typ, self.arg
 
 class Let(Node):
     def __init__(self, var, rhs, body):
@@ -39,6 +45,8 @@ class Let(Node):
         self.body = body
     def __repr__(self):
         return 'Let(' + str(self.var) + ', ' + str(self.rhs) + ', ' + str(self.body) + ')'
+    def getChildNodes(self):
+        return self.var, self.rhs, self.body
 
 class IntegerAdd(Add):
     def __repr__(self):
