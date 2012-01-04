@@ -52,3 +52,18 @@ class PrettyPrint(astvisitor.ASTVisitor):
         ast_str += str(ast) + "\n"
         return ast_str
 
+    def visit_Assign(self, ast, indent, ast_str):
+        """This customizes the way Assign nodes are printed.
+
+           This is necessary because getChildNodes doesn't return the tailCall
+           attribute. This is added in the tailcallanalysis phase.
+        """
+        # If the assign has tailCall set to True, then say so:
+        if getattr(ast, "tailCall", False):
+            ast_str = self._appendIndents(ast_str, indent)
+            ast_str += "TAIL CALL. CallerArgNum: %d\n" % ast.callerArgNum
+            ast_str = self._visit_OneLine(ast, indent, ast_str)
+            return ast_str
+        # Otherwise, use the default print routine.
+        else:
+            return self.default(ast, indent, ast_str)
