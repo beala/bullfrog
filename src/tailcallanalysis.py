@@ -49,7 +49,7 @@ class TailCallAnalysis(ASTVisitor, stage.Stage):
         callerArgNum = len(ast.argnames)
         nodeDict = self._makeNodeDict()
         nodeDict['before'] = rBefore
-        self.visit(ast.code, {}, globalDict, callerArgNum)  # Kill everything at the beginning of a function.
+        self.visit(ast.code, [], globalDict, callerArgNum)  # Kill everything at the beginning of a function.
         nodeDict['after'] = []  # Kill everything at the end of a function
         globalDict[ast] = nodeDict
         return []
@@ -70,27 +70,17 @@ class TailCallAnalysis(ASTVisitor, stage.Stage):
         if isinstance(ast.expr, Name) and (self._searchListForVarTup(ast.expr.name, rBefore)):
             copiedFrom = self._searchListForVarTup(ast.expr.name, rBefore)
             varName = ast.nodes[0].name
-            assNodes = [] 
+            assNodes = []
             for assNode in copiedFrom:
                 assNodes += assNode[1]
             varTup = (varName, assNodes)
             rAfter.append(varTup)
-            #copiedFrom = self._searchListForVarTup(ast.expr.name, rBefore)
-            #newVarDict = {} # New varDict for the variable in the RHS of the assignment
-            #newVarDict['varName'] = ast.nodes[0].name
-            #newVarDict['assNode'] = copiedFrom['assNode']
-            #rAfter.append(newVarDict)
-            #import pdb; pdb.set_trace()
         # Elif the assign is from a CallUserDef
         elif isinstance(ast.expr, CallFunc) or isinstance(ast.expr, CallUserDef):
             varName = ast.nodes[0].name
             assNodes = [ast]
             varTup = (varName, assNodes)
             rAfter.append(varTup)
-            #varDict = {}
-            #varDict['varName'] = ast.nodes[0].name
-            #varDict['assNode'] = ast
-            #rAfter.append(varDict)
         # Else kill everthing in R_after
         else:
             pass # rAfter already empty
@@ -120,8 +110,9 @@ class TailCallAnalysis(ASTVisitor, stage.Stage):
     def visit_If(self, ast, rBefore, globalDict, callerArgNum):
         nodeDict = self._makeNodeDict()
         nodeDict['before'] = rBefore
-        ifAfter = self.visit(ast.tests[0][1], rBefore, globalDict, callerArgNum)
-        elseAfter = self.visit(ast.else_, rBefore, globalDict, callerArgNum)
+        #Each branch starts with an empty rBefore.
+        ifAfter = self.visit(ast.tests[0][1], [], globalDict, callerArgNum)
+        elseAfter = self.visit(ast.else_, [], globalDict, callerArgNum)
         #import pdb; pdb.set_trace()
         rAfter = ifAfter + elseAfter
         nodeDict['after'] = rAfter
