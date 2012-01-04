@@ -8,6 +8,8 @@ class CreateClosure(Node):
         self.env = env
     def __repr__(self):
         return "CreateClosure(" + str(self.name) + " ," + str(self.env) + ")"
+    def getChildNodes(self):
+        return self.name, self.env
 
 class CallUserDef(CallFunc):
     def __repr__(self):
@@ -19,6 +21,8 @@ class GetFunPtr(Node):
         self.name = name
     def __repr__(self):
         return 'GetFunPtr(' + str(self.name) + ')'
+    def getChildNodes(self):
+        return self.name,
 
 class GetFreeVars(Node):
     name = None
@@ -26,3 +30,5 @@ class GetFreeVars(Node):
         self.name = name
     def __repr__(self):
         return 'GetFreeVars(' + str(self.name) + ')'
+    def getChildNodes(self):
+        return self.name,
