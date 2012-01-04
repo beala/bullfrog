@@ -1,6 +1,6 @@
 from astvisitor import *
-from prjast import *
 from compiler.ast import *
+from p3ast import *
 import stage
 
 ## Dictionary notation
